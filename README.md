@@ -12,3 +12,8 @@ conda creare -p census_venv python==3.8
 ```
 pip install -r requirements.txt
 ```
+
+### to run setup.py
+```
+pip install setup.py install
+```
