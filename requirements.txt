@@ -2,4 +2,7 @@ numpy
 pandas
 flask
 matplotlib
+ipykernel
+seaborn
+plotly
 -e .
