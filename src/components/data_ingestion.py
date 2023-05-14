@@ -1,12 +1,13 @@
 import os
 import sys
+import numpy as np
 from src.logger import logging
 from src.exception import CustomException
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-#from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformation
 
 
 ## Intitialize the Data Ingetion Configuration
@@ -25,7 +26,8 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info('Data Ingestion methods Starts')
         try:
-            df=pd.read_csv(os.path.join('notebooks/data', 'adult.data'))
+            df=pd.read_csv(os.path.join('notebooks/data', 'adult.data'), names=['age', 'workclass','fnlwgt','education','education_num','marital_status','occupation','relationship','race','sex','capital_gain','capital_loss','hours_per_week','nativecountry','income'])
+            df.replace(' ?', np.nan, inplace=True)
             logging.info('Dataset read as pandas Dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
@@ -50,7 +52,9 @@ class DataIngestion:
         
 if __name__=='__main__':
     obj=DataIngestion()
-    train_data, test_data = obj.initiate_data_ingestion()
+    train_data_path, test_data_path = obj.initiate_data_ingestion()
+    data_transformation = DataTransformation()
+    train_arr, test_arr = data_transformation.initaite_data_transformation(train_data_path, test_data_path)
 
 
 
