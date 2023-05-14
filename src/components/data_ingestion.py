@@ -28,6 +28,8 @@ class DataIngestion:
         try:
             df=pd.read_csv(os.path.join('notebooks/data', 'adult.data'), names=['age', 'workclass','fnlwgt','education','education_num','marital_status','occupation','relationship','race','sex','capital_gain','capital_loss','hours_per_week','nativecountry','income'])
             df.replace(' ?', np.nan, inplace=True)
+            income_map = {' <=50K' :0, ' >50K': 1}
+            df['income'] = df['income'].map(income_map)
             logging.info('Dataset read as pandas Dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
@@ -50,11 +52,11 @@ class DataIngestion:
             logging.info('Exception occured at Data Ingestion stage')
             raise CustomException(e,sys)
         
-if __name__=='__main__':
+'''if __name__=='__main__':
     obj=DataIngestion()
     train_data_path, test_data_path = obj.initiate_data_ingestion()
     data_transformation = DataTransformation()
-    train_arr, test_arr = data_transformation.initaite_data_transformation(train_data_path, test_data_path)
+    train_arr, test_arr = data_transformation.initaite_data_transformation(train_data_path, test_data_path)'''
 
 
 
